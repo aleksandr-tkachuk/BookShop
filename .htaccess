@@ -1,0 +1,6 @@
+<Files admin.php>
+AuthName "Authorize only"
+AuthType Basic
+AuthUserFile C:/OpenServer/domains/bookshop/.htpasswd
+require valid-user
+</Files>
