@@ -13,7 +13,7 @@ $config = [
 			"username" => "root",
 			"password" => "123456",
 			"dbname" => "bookShop",
-			"charset" => "UTF8"
+			"charset" => "utf8"
 		],
 		"postgre" => [
 			"driver" => "pgsql",
@@ -22,6 +22,9 @@ $config = [
 			"password" => "123456",
 			"dbname" => "newbookshop",
 		],
-	]
+	],
+    "api" => [
+        "defaultResponseFormat" => "json"
+    ]
 ];
 

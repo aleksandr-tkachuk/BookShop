@@ -3,10 +3,16 @@
 class  App{
 
     public static $db;
+    public static $config;
        
 	public function __construct($config){
+        self::$config = $config;
 		self::$db = new db_new($config["db"][$config["db"]["type"]]);
 	}
+
+    public static function getConfigParams($param){
+        return (isset(self::$config[$param])) ? self::$config[$param] : '';
+    }
 
 	public function start(){
 		

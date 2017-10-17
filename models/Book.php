@@ -11,7 +11,53 @@ class Book extends Models{
     public function getTableName(){
         return "book";
     }
-    
+/*
+    public function findAll($params = [], $orders = []){
+      $books = parent::findAll($params = [], $orders = []);
+      foreach ($books as $key=>$value){
+          $sql = '
+          select genre.* 
+          from genre_book 
+          left join genre on genre_book.genre_id = genre.genre_id 
+          where genre_book.book_id='.$value['book_id'];
+          $genres = App::$db->select($sql);
+          $books[$key]["genres"] = $genres;
+
+          $sql = '
+          select author.* 
+          from author_book 
+          left join author on author_book.author_id = author.author_id 
+          where author_book.book_id='.$value['book_id'];
+
+          $authors = App::$db->select($sql);
+          $books[$key]["authors"] = $authors;
+
+      }
+        return $books;
+    }
+*/
+    public function findById($id)
+    {
+        $book = parent::find($id, true);
+
+        $sql = '
+          select genre.* 
+          from genre_book 
+          left join genre on genre_book.genre_id = genre.genre_id 
+          where genre_book.book_id='.$id;
+        $genres = App::$db->select($sql);
+        $book->genres = $genres;
+        $sql = '
+          select author.* 
+          from author_book 
+          left join author on author_book.author_id = author.author_id 
+          where author_book.book_id='.$id;
+
+        $authors = App::$db->select($sql);
+        $book->authors = $authors;
+        return $book;
+    }
+
     public static function findByAttributes($params) {
         $genres = [];
         $authors = [];
@@ -45,13 +91,20 @@ class Book extends Models{
             }
         }
 
+
         if(sizeof($a) != 0 && sizeof($b) != 0){
-        $result = array_uintersect_uassoc($a, $b, function(){}, "strcasecmp"); 
-        }  elseif (sizeof($a) == 0){
+
+            $result = array_uintersect_uassoc($a, $b, function(){}, "strcasecmp");
+        }  elseif (sizeof($a) == 0 && sizeof($b) != 0){
                 $result = $b;
-            
-        }  elseif (sizeof($b) == 0){
+        }  elseif (sizeof($b) == 0 && sizeof($a) != 0){
                 $result = $a;
+        }else{
+            if(isset($params["author"]) || isset($params['genre'])){
+                $result =[];
+            }else {
+                $result = self::model()->findAll();
+            }
         }
         return $result;
         

@@ -2,13 +2,13 @@
 class db_new extends PDO{
 
 	public function __construct($config){
-		$dns = $config['driver'] .
+		$dsn = $config['driver'] .
 			':host=' . $config['host'] .
 			((!empty($config['port'])) ? (';port=' . $config['port']) : '') .
 			';dbname=' . $config['dbname'] .
 			((!empty($config['charset'])) ? (';charset=' . $config['charset']) : '');
 
-		parent::__construct($dns, $config['username'], $config['password']);
+		parent::__construct($dsn, $config['username'], $config['password']);
 	}
 
 	public function select($sql, $single = false){

@@ -53,7 +53,7 @@ abstract class Models{
         }
         $sth = $this->db->prepare($sql);
         $sth->execute($dbParams);
-        return $sth->fetchAll();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
         
     }
     
