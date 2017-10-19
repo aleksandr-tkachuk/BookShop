@@ -12,7 +12,7 @@
 foreach ($genre as $value) {
     echo $value['genre_name']."&nbsp;<a href='admin.php?c=genre&a=update&genre_id="
             .$value['genre_id']."'>изменить</a>&nbsp;"
-            . "&nbsp;<a href='admin.php?c=genre&a=delite&genre_id="
+            . "&nbsp;<a href='admin.php?c=genre&a=delete&genre_id="
             .$value['genre_id']."'>Удалить</a><br>";
 }
 ?>

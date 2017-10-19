@@ -31,11 +31,11 @@ class GenreController extends BaseController{
         }
         
         
-        public function delite() {
+        public function delete() {
             
            if(isset($_GET['genre_id'])){
             $delete = Genre::model()->find($_GET['genre_id']); 
-            $delete->delit();
+            $delete->delete();
             
             $sql = 'delete from genre_book where genre_id='.$_GET['genre_id'];
             App::$db->query($sql);

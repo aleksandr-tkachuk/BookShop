@@ -12,7 +12,7 @@
 foreach ($author as $value) {
     echo $value['author_name']."&nbsp;<a href='admin.php?c=author&a=update&author_id="
             .$value['author_id']."'>изменить</a>&nbsp;"
-            . "&nbsp;<a href='admin.php?c=author&a=delite&author_id="
+            . "&nbsp;<a href='admin.php?c=author&a=delete&author_id="
             .$value['author_id']."'>Удалить</a><br>";
 }
 ?>

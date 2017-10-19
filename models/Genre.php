@@ -10,7 +10,7 @@ class Genre extends Models{
         return "genre";
     }
 
-    public function delit() {
+    public function delete() {
         $sql = $this->db->prepare("DELETE FROM ".$this->getTableName()." where ".$this->getTableName()."_id = ?");
 
         $sql->execute(array($this->genre_id));

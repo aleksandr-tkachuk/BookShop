@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 15 2017 г., 18:26
+-- Время создания: Окт 19 2017 г., 18:08
 -- Версия сервера: 5.7.16
 -- Версия PHP: 5.6.29
 
@@ -29,12 +29,16 @@ USE `bookShop`;
 --
 
 DROP TABLE IF EXISTS `author`;
-CREATE TABLE IF NOT EXISTS `author` (
-  `author_id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `author` (
+  `author_id` int(11) NOT NULL,
+  `author_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `author`
+--
+
+TRUNCATE TABLE `author`;
 --
 -- Дамп данных таблицы `author`
 --
@@ -52,13 +56,16 @@ INSERT INTO `author` (`author_id`, `author_name`) VALUES
 --
 
 DROP TABLE IF EXISTS `author_book`;
-CREATE TABLE IF NOT EXISTS `author_book` (
+CREATE TABLE `author_book` (
   `author_id` int(11) NOT NULL,
-  `book_id` int(11) NOT NULL,
-  KEY `author_id` (`author_id`),
-  KEY `book_id` (`book_id`)
+  `book_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `author_book`
+--
+
+TRUNCATE TABLE `author_book`;
 --
 -- Дамп данных таблицы `author_book`
 --
@@ -90,15 +97,19 @@ INSERT INTO `author_book` (`author_id`, `book_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `book`;
-CREATE TABLE IF NOT EXISTS `book` (
-  `book_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book` (
+  `book_id` int(11) NOT NULL,
   `book_name` varchar(255) NOT NULL,
   `book_description` tinytext,
   `book_price` float(8,2) NOT NULL,
-  `book_discount_id` int(11) NOT NULL,
-  PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `book_discount_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `book`
+--
+
+TRUNCATE TABLE `book`;
 --
 -- Дамп данных таблицы `book`
 --
@@ -121,29 +132,30 @@ INSERT INTO `book` (`book_id`, `book_name`, `book_description`, `book_price`, `b
 --
 
 DROP TABLE IF EXISTS `book_order`;
-CREATE TABLE IF NOT EXISTS `book_order` (
+CREATE TABLE `book_order` (
   `book_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `count` int(11) NOT NULL,
-  KEY `book_id` (`book_id`),
-  KEY `order_id` (`order_id`)
+  `book_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Структура таблицы `clients`
+-- Очистить таблицу перед добавлением данных `book_order`
 --
 
-DROP TABLE IF EXISTS `clients`;
-CREATE TABLE IF NOT EXISTS `clients` (
-  `clients_id` int(11) NOT NULL AUTO_INCREMENT,
-  `clients_name` varchar(255) NOT NULL,
-  `clients_email` varchar(255) NOT NULL,
-  `clients_phone` int(11) NOT NULL,
-  `clients_discount_id` int(11) NOT NULL,
-  PRIMARY KEY (`clients_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+TRUNCATE TABLE `book_order`;
+--
+-- Дамп данных таблицы `book_order`
+--
+
+INSERT INTO `book_order` (`book_id`, `order_id`, `book_count`) VALUES
+(10, 1, 2),
+(2, 1, 1),
+(11, 3, 2),
+(13, 3, 3),
+(13, 4, 1),
+(11, 4, 5),
+(13, 5, 2),
+(11, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -152,14 +164,18 @@ CREATE TABLE IF NOT EXISTS `clients` (
 --
 
 DROP TABLE IF EXISTS `discount`;
-CREATE TABLE IF NOT EXISTS `discount` (
-  `discount_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `discount` (
+  `discount_id` int(11) NOT NULL,
   `discount_name` varchar(255) NOT NULL,
   `discount_tax` int(11) NOT NULL,
-  `discount_type` tinyint(4) NOT NULL,
-  PRIMARY KEY (`discount_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  `discount_type` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `discount`
+--
+
+TRUNCATE TABLE `discount`;
 --
 -- Дамп данных таблицы `discount`
 --
@@ -178,20 +194,24 @@ INSERT INTO `discount` (`discount_id`, `discount_name`, `discount_tax`, `discoun
 --
 
 DROP TABLE IF EXISTS `genre`;
-CREATE TABLE IF NOT EXISTS `genre` (
-  `genre_id` int(11) NOT NULL AUTO_INCREMENT,
-  `genre_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`genre_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+CREATE TABLE `genre` (
+  `genre_id` int(11) NOT NULL,
+  `genre_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `genre`
+--
+
+TRUNCATE TABLE `genre`;
 --
 -- Дамп данных таблицы `genre`
 --
 
 INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
-(16, 'комедия'),
-(18, 'фантастика'),
-(23, 'роман');
+(16, 'comedy'),
+(18, 'fiction'),
+(23, 'roman');
 
 -- --------------------------------------------------------
 
@@ -200,13 +220,16 @@ INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 --
 
 DROP TABLE IF EXISTS `genre_book`;
-CREATE TABLE IF NOT EXISTS `genre_book` (
+CREATE TABLE `genre_book` (
   `genre_id` int(11) NOT NULL,
-  `book_id` int(11) NOT NULL,
-  KEY `genre_id` (`genre_id`),
-  KEY `book_id` (`book_id`)
+  `book_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `genre_book`
+--
+
+TRUNCATE TABLE `genre_book`;
 --
 -- Дамп данных таблицы `genre_book`
 --
@@ -226,15 +249,152 @@ INSERT INTO `genre_book` (`genre_id`, `book_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
-  `order_data` datetime NOT NULL,
-  `order_client_id` int(11) NOT NULL,
-  `order_cost` float(8,2) NOT NULL,
-  `order_status` int(11) NOT NULL DEFAULT '1',
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`order_id`)
+CREATE TABLE `orders` (
+  `orders_data` datetime NOT NULL,
+  `orders_client_id` int(11) NOT NULL,
+  `orders_cost` float(8,2) NOT NULL,
+  `orders_status` int(11) NOT NULL DEFAULT '1' COMMENT '1- new order, 2 - canceled order, 3 - completed order',
+  `orders_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- Очистить таблицу перед добавлением данных `orders`
+--
+
+TRUNCATE TABLE `orders`;
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`orders_data`, `orders_client_id`, `orders_cost`, `orders_status`, `orders_id`) VALUES
+('2017-10-19 17:31:17', 1, 561.00, 1, 1),
+('2017-10-19 17:33:06', 2, 615.00, 2, 3),
+('2017-10-19 18:03:10', 2, 738.00, 3, 4),
+('2017-10-19 18:04:21', 2, 615.00, 1, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `user`
+--
+
+TRUNCATE TABLE `user`;
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `login`, `password`, `name`, `token`) VALUES
+(1, 'aleksandr', '698d51a19d8a121ce581499d7b701668', '', 'ZXURZK5ZGicB8a0'),
+(2, 'test', '698d51a19d8a121ce581499d7b701668', '', '8z4cVA0PhRbsY4d');
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `author`
+--
+ALTER TABLE `author`
+  ADD PRIMARY KEY (`author_id`);
+
+--
+-- Индексы таблицы `author_book`
+--
+ALTER TABLE `author_book`
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `book_id` (`book_id`);
+
+--
+-- Индексы таблицы `book`
+--
+ALTER TABLE `book`
+  ADD PRIMARY KEY (`book_id`);
+
+--
+-- Индексы таблицы `book_order`
+--
+ALTER TABLE `book_order`
+  ADD KEY `book_id` (`book_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Индексы таблицы `discount`
+--
+ALTER TABLE `discount`
+  ADD PRIMARY KEY (`discount_id`);
+
+--
+-- Индексы таблицы `genre`
+--
+ALTER TABLE `genre`
+  ADD PRIMARY KEY (`genre_id`);
+
+--
+-- Индексы таблицы `genre_book`
+--
+ALTER TABLE `genre_book`
+  ADD KEY `genre_id` (`genre_id`),
+  ADD KEY `book_id` (`book_id`);
+
+--
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`orders_id`);
+
+--
+-- Индексы таблицы `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `author`
+--
+ALTER TABLE `author`
+  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT для таблицы `book`
+--
+ALTER TABLE `book`
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT для таблицы `discount`
+--
+ALTER TABLE `discount`
+  MODIFY `discount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT для таблицы `genre`
+--
+ALTER TABLE `genre`
+  MODIFY `genre_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT для таблицы `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

@@ -10,7 +10,7 @@ class Author extends Models{
         return "author";
     }
 
-    public function delit() {
+    public function delete() {
         $sql = $this->db->prepare("DELETE FROM ".$this->getTableName()." where ".$this->getTableName()."_id = ?");
 
         $sql->execute(array($this->author_id));

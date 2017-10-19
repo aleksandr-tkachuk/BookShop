@@ -16,7 +16,7 @@
     <td><?=$value['discount_tax']?></td>
     <td><?=($value['discount_type'] ==1) ? "на товар" :'для клиента'?></td>
     <td><a href='admin.php?c=skidka&a=update&discount_id=<?=$value['discount_id']?>'>изменить</a></td>
-    <td><a href='admin.php?c=skidka&a=delite&discount_id=<?=$value['discount_id']?>'>Удалить</a></td>
+    <td><a href='admin.php?c=skidka&a=delete&discount_id=<?=$value['discount_id']?>'>Удалить</a></td>
     </th>
     </table>
 <?php }?>

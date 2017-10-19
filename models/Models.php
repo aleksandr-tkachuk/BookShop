@@ -81,7 +81,7 @@ abstract class Models{
         if(!empty($this->$id)){
             $this->update();
         }else{
-            $this->insert();
+            return $this->insert();
         }
     }
     
@@ -127,15 +127,17 @@ abstract class Models{
             }
         }
         $sql = $sql." ($fields) values ($values)";
-       //echo $sql;print_r($sqlValues);
+       //echo $sql;
+        //print_r($sqlValues);
         $sth = $this->db->prepare($sql);
-        $sth->execute($sqlValues);
+        $result = $sth->execute($sqlValues);
         //print_r($sth);
         //$this->id = $this->db->lastId();
         $this->find($this->db->lastId());
+        return $result;
     }
     
-    public function delit() {
+    public function delete() {
         $sql = $this->db->prepare("DELETE FROM ".$this->getTableName()." where ".$this->getTableName()."_id = ?");
 		
         $sql->execute(array($this->{$this->getTableName() . '_id'}));

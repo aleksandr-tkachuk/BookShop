@@ -20,7 +20,7 @@
             <td> price <?=$value['book_price']?></td>
             <td> sale = <?=$value['book_discount']?></td>
             <td><a href=" admin.php?c=book&a=update&book_id=<?=$value["book_id"] ?>"> изменить </a></td>
-            <td><a href="admin.php?c=book&a=delite&book_id=<?=$value["book_id"] ?>"> удалить </a></td>
+            <td><a href="admin.php?c=book&a=delete&book_id=<?=$value["book_id"] ?>"> удалить </a></td>
             </th>
             </table>
         <?php }?>

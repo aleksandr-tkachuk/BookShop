@@ -47,11 +47,11 @@ class SkidkaController extends BaseController{
         $this->render("update", ["discount"=> $result]);
     }
 
-    public function delite() {
+    public function delete() {
 
         if(isset($_GET['discount_id'])){
             $discount = Discount::model()->find($_GET['discount_id']);
-            $discount->delit();
+            $discount->delete();
 
            /* $sql = 'delete from discount where discount_id='.$_GET['discount_id'];
             App::$db->query($sql);*/

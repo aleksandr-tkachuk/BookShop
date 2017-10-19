@@ -106,11 +106,11 @@ class BookController extends BaseController{
             }
         }
         
-        public function delite() {
+        public function delete() {
             
             if(isset($_GET['book_id'])){
                 $book = Book::model()->find($_GET['book_id']);
-                $book->delit();
+                $book->delete();
             /*
             $sql = 'delete from book where book_id='.$_GET["book_id"];
             App::$db->query($sql);

@@ -31,11 +31,11 @@ class AuthorController extends BaseController{
             $this->render("update", ["author"=> $result]); 
         }
         
-        public function delite() {
+        public function delete() {
             
             if(isset($_GET['author_id'])){
             $author = Author::model()->find($_GET['author_id']); 
-            $author->delit();
+            $author->delete();
 /*
             $sql = 'delete from author_book where author_id='.$_GET['author_id'];
             App::$db->query($sql);*/

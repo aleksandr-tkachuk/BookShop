@@ -133,7 +133,7 @@ class Book extends Models{
 
     }
 
-    public function delit() {
+    public function delete() {
         $sql = $this->db->prepare("DELETE FROM ".$this->getTableName()." where ".$this->getTableName()."_id = ?");
 
         $sql->execute(array($this->book_id));
@@ -149,5 +149,5 @@ class Book extends Models{
     public static function model($className = __CLASS__){
         return parent::model($className);
     }
-    
+
 }
