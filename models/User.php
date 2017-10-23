@@ -7,6 +7,7 @@ class User extends Models{
     public $password;
     public $name;
     public $token;
+    public $discount;
 
     public function getTableName(){
         return "user";
@@ -77,5 +78,75 @@ class User extends Models{
         return $min + $rnd;
     }
 
+    public function find($id){
+        $sql = "select * from ".$this->getTableName()." where  id = ?";
+
+        $sql = $this->db->prepare($sql);
+        $sql->execute(array($id));
+        $sqlResult = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if($sqlResult){
+            foreach ($sqlResult as $attr => $value){
+                $this->$attr = $value;
+            }
+
+            return $this;
+        }else{
+            return null;
+        }
+
+    }
+
+    public function save(){
+        if(!empty($this->id)){
+            $this->update();
+        }else{
+            return $this->insert();
+        }
+    }
+
+    private function insert(){
+        $sql = "insert into ".$this->getTableName();
+        $fields = "";
+        $values = "";
+        $comma = 0;
+        $sqlValues = [];
+        foreach ($this as $attr => $value){
+            if($attr != "id" && $attr != "db"){
+                if($comma != 0){
+                    $fields .= ", ";
+                    $values .= ", ";
+                }
+                $fields .= $attr;
+                $values .= "?";
+                $sqlValues[] = $value;
+                $comma++;
+            }
+        }
+        $sql = $sql." ($fields) values ($values)";
+        $sth = $this->db->prepare($sql);
+
+        $result = $sth->execute($sqlValues);
+        $this->find($this->db->lastId());
+        return $result;
+    }
+
+    private function update(){
+        $sql = "update ".$this->getTableName()." set ";
+        $fields = "";
+        $comma = 0;
+
+        foreach ($this as $attr => $value){
+            if($attr != "db"){
+                if($comma != 0){
+                    $fields .= ", ";
+                }
+                $fields .= $attr."='".$value."'";
+                $comma++;
+            }
+        }
+        $sql .= $fields." where id=".$this->id;
+        $this->db->sqlQuery($sql);
+    }
 
 }

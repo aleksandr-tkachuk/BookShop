@@ -82,7 +82,7 @@ class BookController extends BaseController{
             }
             $result["book_genre"] = $book_genre;
 
-            $sql = 'select * from discount';
+            $sql = 'select * from discount where discount_type = 1';
             $discounts = App::$db->select($sql);
 
             $book_authors = [];

@@ -36,13 +36,21 @@ class Order extends Models{
             $orderCost = 0;
             foreach ($data["book"] as $k => $item) {
                 $book = Book::model()->find($item["id"]);
-                $orderCost += ($book->book_price * $item["count"]);
+                $discount = Discount::model()->find($book->book_discount_id);
+                $book_cost = $book->book_price - round($book->book_price * $discount->discount_tax / 100, 2);
+
+                $orderCost += ($book_cost * $item["count"]);
             }
 
             $order = new self;
             $order->orders_client_id = $user->id;
             $order->orders_data = date("Y-m-d H:i:s", strtotime("now"));
-            $order->orders_cost = $orderCost;
+            if($user->discount != 0) {
+                $discount = Discount::model()->find($user->discount);
+                $order->orders_cost = $orderCost - round($orderCost * $discount->discount_tax / 100, 2);
+            }else{
+                $order->orders_cost = $orderCost;
+            }
             $order->orders_status = 1;
 
             if($order->save()) {

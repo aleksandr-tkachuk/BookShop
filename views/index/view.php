@@ -32,9 +32,9 @@
        ?> <br>
        ОПЕСАНИЕ :<?=$book['description'];?> <br>
        ЦЕНА :<?=$book['price'];?> <br>
-       <?php if ($book['discount'] !=0){?>
-       СКИДКА :<?=$book['discount'];?> <br>
-       ЦЕНА СО СКИДКОЙ :<?=$book['price']-$book['discount'];?> <br><br>
+       <?php if ($book['discountCost'] !=0){?>
+       СКИДКА :<?=$book['discountCost'];?> <br>
+       ЦЕНА СО СКИДКОЙ :<?=$book['price']-$book['discountCost'];?> <br><br>
        <?php } ?>
  <h3>Оформить заказ :</h3><br/>
 	<form action="index.php?c=index&a=order&id=<?=$id?>" method="post">

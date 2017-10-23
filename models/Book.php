@@ -117,7 +117,7 @@ class Book extends Models{
 
         $sqlauth = '(' . implode(", {$this->book_id}), (", $authors) . ", {$this->book_id})";
         $sql = "insert into author_book VALUES $sqlauth";
-        echo $sql;
+
         $this->db->sqlQuery($sql);
 
     }

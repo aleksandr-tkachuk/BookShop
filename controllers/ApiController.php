@@ -164,6 +164,7 @@ class ApiController extends BaseController{
             $newUser->password = md5($request["password"]);
             $newUser->name = array_key_exists("name", $request)?$request["name"]:'';
             $newUser->token = $token;
+            $newUser->discount = 0;
             $newUser->save();
         }else{
             $this->sendResponse(["success" => 0, "message" => 'This login is exists']);

@@ -29,6 +29,9 @@ class IndexController extends BaseController{
         
         public function view() {
             $form = [
+                //'login' => ['lable' => 'Login','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели login!'],
+                //'password' => ['lable' => 'Password','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели password!'],
+
                 'name' => [
                     'lable' => 'Имя',
                     'type' => 'text',
@@ -68,7 +71,8 @@ class IndexController extends BaseController{
                 $res_book['name'] = $book->book_name;
                 $res_book['description'] = $book->book_description;
                 $res_book['price'] = $book->book_price;
-                $res_book['discount'] = $book->book_discount_id;
+                $discount = Discount::model()->find($book->book_discount_id);
+                $res_book['discountCost'] = round($book->book_price * $discount->discount_tax / 100, 2);
                 $res_book['id'] = $book->book_id;
                 $sql = 'select * from genre_book where book_id = '.$book->book_id;
                 $genres = App::$db->select($sql);
@@ -115,6 +119,9 @@ class IndexController extends BaseController{
         public function order() {
             
             $form = [
+                //'login' => ['lable' => 'Login','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели login!'],
+                //'password' => ['lable' => 'Password','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели password!'],
+
                 'name' => ['lable' => 'Имя','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели имя!'],
                 'family_name' => ['lable' => 'Фамилия','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели фамилию!'],
                 'addres' => ['lable' => 'адрес','value' => '','type' => 'text','error' => false,'errorText' => 'не ввели адрес!'],
@@ -210,6 +217,7 @@ class IndexController extends BaseController{
                         $res_author = Author::model()->find($author['author_id']);
                         $all_author[] = $res_author->author_name;
                     }
+
             $this->render('view',[
                     'form' => $form, 
                     'id'=> $_GET['id'], 
