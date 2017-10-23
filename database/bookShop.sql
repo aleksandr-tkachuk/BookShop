@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 19 2017 г., 18:08
+-- Время создания: Окт 23 2017 г., 15:59
 -- Версия сервера: 5.7.16
 -- Версия PHP: 5.6.29
 
@@ -78,8 +78,6 @@ INSERT INTO `author_book` (`author_id`, `book_id`) VALUES
 (4, 11),
 (3, 0),
 (5, 0),
-(3, 2),
-(4, 2),
 (3, 14),
 (4, 14),
 (3, 15),
@@ -88,7 +86,9 @@ INSERT INTO `author_book` (`author_id`, `book_id`) VALUES
 (3, 17),
 (4, 17),
 (3, 18),
-(4, 18);
+(4, 18),
+(3, 2),
+(4, 2);
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ TRUNCATE TABLE `book`;
 --
 
 INSERT INTO `book` (`book_id`, `book_name`, `book_description`, `book_price`, `book_discount_id`) VALUES
-(2, 'rott', 'chot in good!', 321.00, 0),
+(2, 'rott', 'chot in good!', 321.00, 9),
 (10, 'монстры', '2017 год', 120.00, 0),
 (11, 'wwwddd', 'qazwsxedc', 123.00, 8),
 (13, 'ZZZZZ', 'ssss', 123.00, 9),
@@ -155,7 +155,9 @@ INSERT INTO `book_order` (`book_id`, `order_id`, `book_count`) VALUES
 (13, 4, 1),
 (11, 4, 5),
 (13, 5, 2),
-(11, 5, 3);
+(11, 5, 3),
+(13, 6, 1),
+(2, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -240,7 +242,8 @@ INSERT INTO `genre_book` (`genre_id`, `book_id`) VALUES
 (16, 15),
 (18, 15),
 (23, 16),
-(18, 17);
+(18, 17),
+(18, 2);
 
 -- --------------------------------------------------------
 
@@ -270,7 +273,8 @@ INSERT INTO `orders` (`orders_data`, `orders_client_id`, `orders_cost`, `orders_
 ('2017-10-19 17:31:17', 1, 561.00, 1, 1),
 ('2017-10-19 17:33:06', 2, 615.00, 2, 3),
 ('2017-10-19 18:03:10', 2, 738.00, 3, 4),
-('2017-10-19 18:04:21', 2, 615.00, 1, 5);
+('2017-10-19 18:04:21', 2, 615.00, 1, 5),
+('2017-10-23 15:11:50', 2, 550.80, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -284,7 +288,8 @@ CREATE TABLE `user` (
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL
+  `token` varchar(255) NOT NULL,
+  `discount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -296,9 +301,10 @@ TRUNCATE TABLE `user`;
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`id`, `login`, `password`, `name`, `token`) VALUES
-(1, 'aleksandr', '698d51a19d8a121ce581499d7b701668', '', 'ZXURZK5ZGicB8a0'),
-(2, 'test', '698d51a19d8a121ce581499d7b701668', '', '8z4cVA0PhRbsY4d');
+INSERT INTO `user` (`id`, `login`, `password`, `name`, `token`, `discount`) VALUES
+(1, 'aleksandr', '698d51a19d8a121ce581499d7b701668', '', 'ZXURZK5ZGicB8a0', 8),
+(2, 'test', '698d51a19d8a121ce581499d7b701668', '', '8z4cVA0PhRbsY4d', 10),
+(3, 'newtest', '698d51a19d8a121ce581499d7b701668', '', 'XlYG5UbYSNVNJLO', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -389,12 +395,12 @@ ALTER TABLE `genre`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
