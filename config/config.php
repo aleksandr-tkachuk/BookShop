@@ -9,9 +9,9 @@ $config = [
 		"type" => TYPE_DB,
 		"mysql" => [
 			"driver" => "mysql",
-			"host" => "localhost",
+			"host" => "mysqldump",
 			"username" => "root",
-			"password" => "123456",
+			"password" => "root",
 			"dbname" => "bookShop",
 			"charset" => "utf8"
 		],

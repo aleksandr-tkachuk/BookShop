@@ -16,6 +16,7 @@ class ApiController extends BaseController{
      * response type - json|xml|txt|html
      */
     public function getGenres(){
+        $this->cors();
         if($this->getRequestType() !== "GET") {
             $this->requestError(405);
         }
@@ -32,6 +33,7 @@ class ApiController extends BaseController{
     * response type - json|xml|txt|html
     */
     public function getAuthors(){
+        $this->cors();
         if($this->getRequestType() !== "GET") {
             $this->requestError(405);
         }
@@ -48,7 +50,7 @@ class ApiController extends BaseController{
   * response type - json|xml|txt|html
   */
     public function getBookById(){
-
+        $this->cors();
         if($this->getRequestType() !== "GET") {
             $this->requestError(405);
         }
@@ -70,6 +72,7 @@ class ApiController extends BaseController{
    * response type - json|xml|txt|html
    */
     public function getBooks(){
+        $this->cors();
         if($this->getRequestType() !== "GET") {
             $this->requestError(405);
         }
@@ -101,7 +104,6 @@ class ApiController extends BaseController{
     *
     * return user token
     */
-
     public function auth(){
         $this->cors();
         if($this->getRequestType() !== "POST") {
@@ -130,6 +132,33 @@ class ApiController extends BaseController{
 
         $this->sendResponse(["success" => 1, "data" => ["token" => $token]]);
     }
+
+    /**
+    * get uder data
+    * request type GEt
+    * url - api/user
+    * token - require
+    *
+    * return user data
+    */
+    public function user(){
+        $this->cors();
+        if($this->getRequestType() !== "GET") {
+            $this->requestError(405);
+        }
+        $token = getallheaders()['token'];
+
+        $user = User::model()->findByToken($token);
+        if($user == null){
+            $this->sendResponse(["success" => 0, "message" => 'login not found']);
+        }else{
+            unset($user->password);
+            unset($user->token);
+        }
+
+        $this->sendResponse(["success" => 1, "data" => $user]);
+    }
+
     /*
     * registration
     * request type POST
@@ -184,6 +213,7 @@ class ApiController extends BaseController{
      */
     public function order()
     {
+        $this->cors();
         if ($this->getRequestType() !== "PUT") {
             $this->requestError(405);
         }

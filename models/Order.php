@@ -35,11 +35,12 @@ class Order extends Models{
         try {
             $orderCost = 0;
             foreach ($data["book"] as $k => $item) {
-                $book = Book::model()->find($item["id"]);
+                $book = Book::model()->find($item->id);
                 $discount = Discount::model()->find($book->book_discount_id);
-                $book_cost = $book->book_price - round($book->book_price * $discount->discount_tax / 100, 2);
+                $book_cost = $book->book_price - round($book->book_price *
+                (!empty($discount->discount_tax)?$discount->discount_tax:0) / 100, 2);
 
-                $orderCost += ($book_cost * $item["count"]);
+                $orderCost += ($book_cost * $item->count);
             }
 
             $order = new self;
@@ -58,7 +59,7 @@ class Order extends Models{
                 foreach ($data["book"] as $k => $item) {
                     $sql = "insert into book_order (book_id, book_count, order_id) values ( ?, ?, ?)";
                     $sqlDb = App::$db->prepare($sql);
-                    $result = $sqlDb->execute(array($item["id"], $item["count"], $order->orders_id));
+                    $result = $sqlDb->execute(array($item->id, $item->count, $order->orders_id));
                     if (!$result) {
                         throw new Exception('cannot add book to order');
                     }

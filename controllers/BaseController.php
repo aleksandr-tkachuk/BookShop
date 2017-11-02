@@ -160,7 +160,7 @@ abstract class BaseController{
         header("Access-Control-Allow-Origin: *");
         header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, DELETE, PATCH');
         header("Access-Control-Max-Age: 3600");
-        header("token, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        header("Access-Control-Allow-Headers: token, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         header("Access-Control-Expose-Headers: Location");
         if($this->getRequestType() === "OPTIONS") exit;
     }

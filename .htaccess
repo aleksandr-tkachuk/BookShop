@@ -14,4 +14,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # get request api by type
 RewriteRule ^api/([a-zA-Z]+)\.([a-z]{3,4})$ index.php?c=api&a=$1&rtype=$2 [L,QSA]
 # get request api
-RewriteRule ^api/([a-zA-Z]+)$ index.php?c=api&a=$1 [L,QSA]
+RewriteRule ^api/([a-zA-Z/]+)(/([0-9]+))?$ index.php?c=api&a=$1&id=$3 [L,QSA]

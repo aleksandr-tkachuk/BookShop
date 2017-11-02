@@ -18,7 +18,9 @@ class User extends Models{
     }
 
     public function findByToken($token){
-        $sql = App::$db->prepare("select * from ".$this->getTableName()." where token = ?");
+        $sql = "select * from ".$this->getTableName()." u
+                LEFT JOIN discount d ON(u.discount = d.discount_id) where token = ?";
+        $sql = App::$db->prepare($sql);
         $sql->execute(array($token));
         $sqlResult = $sql->fetch(PDO::FETCH_ASSOC);
 

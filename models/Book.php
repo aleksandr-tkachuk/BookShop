@@ -11,9 +11,10 @@ class Book extends Models{
     public function getTableName(){
         return "book";
     }
-/*
+
     public function findAll($params = [], $orders = []){
-      $books = parent::findAll($params = [], $orders = []);
+      $q = "select * from book b LEFT JOIN discount d ON(b.book_discount_id = d.discount_id)";
+      $books = App::$db->select($q);
       foreach ($books as $key=>$value){
           $sql = '
           select genre.* 
@@ -35,11 +36,11 @@ class Book extends Models{
       }
         return $books;
     }
-*/
+
     public function findById($id)
     {
-        $book = parent::find($id, true);
-
+      $q = "select * from book b LEFT JOIN discount d ON(b.book_discount_id = d.discount_id) WHERE book_id = $id";
+      $book = (object)App::$db->select($q)[0];
         $sql = '
           select genre.* 
           from genre_book 
